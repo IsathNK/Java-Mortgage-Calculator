@@ -1,15 +1,50 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import java.text.NumberFormat;
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+//        Scanner scan = new Scanner(System.in);
+//        String name = scan.nextLine();
+//        System.out.println("Welcome "+name.trim());
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
-        }
+        //WELCOME//
+        System.out.println("Welcome To Mortgage Calculator By IsathNK \n");
+
+        //Initializing Scanner//
+        Scanner input = new Scanner(System.in);
+
+        //Loan Amount Input
+        System.out.print("Enter the Loan Amount You Need: ");
+        String sloanAmount = input.nextLine();
+
+        //Interest Rate
+        System.out.print("Enter the Interest Rate: ");
+        String sinterestRate = input.nextLine();
+
+        //Repayment Period
+        System.out.print("Enter Repayment Period in Years: ");
+        String srepaymentPeriod = input.nextLine();
+
+        //Conversion Of Strings
+        double loanAmount = Double.parseDouble(sloanAmount);
+        double interestRate = Double.parseDouble(sinterestRate);
+        int repaymentPeriod = Integer.parseInt(srepaymentPeriod);
+
+        //Initializing Final Variables
+        double monthlyPayment = 0;
+
+        //Calculations
+        interestRate = interestRate/100/12;
+        repaymentPeriod = repaymentPeriod*12;
+
+        monthlyPayment=loanAmount *(interestRate * Math.pow(1 + interestRate, repaymentPeriod)) /
+                (Math.pow(1 + interestRate, repaymentPeriod) - 1);
+
+        //FINAL
+
+        String monthlyPaymentFormatted = NumberFormat.getCurrencyInstance().format(monthlyPayment);
+
+
+        System.out.println("Your Monthly Payment Is :"+ monthlyPaymentFormatted);
     }
 }
