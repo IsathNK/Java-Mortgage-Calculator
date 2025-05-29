@@ -3,48 +3,57 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-//        Scanner scan = new Scanner(System.in);
-//        String name = scan.nextLine();
-//        System.out.println("Welcome "+name.trim());
-
-        //WELCOME//
+        //INITIALIZATION//
         System.out.println("Welcome To Mortgage Calculator By IsathNK \n");
-
-        //Initializing Scanner//
         Scanner input = new Scanner(System.in);
 
-        //Loan Amount Input
+        //INPUTS//
         System.out.print("Enter the Loan Amount You Need: ");
-        String sloanAmount = input.nextLine();
+        int loanAmount = input.nextInt();
 
-        //Interest Rate
         System.out.print("Enter the Interest Rate: ");
-        String sinterestRate = input.nextLine();
+        double interestRate = input.nextDouble();
 
-        //Repayment Period
         System.out.print("Enter Repayment Period in Years: ");
-        String srepaymentPeriod = input.nextLine();
+        int repaymentPeriod = input.nextInt();
 
-        //Conversion Of Strings
-        double loanAmount = Double.parseDouble(sloanAmount);
-        double interestRate = Double.parseDouble(sinterestRate);
-        int repaymentPeriod = Integer.parseInt(srepaymentPeriod);
+        System.out.println("Your Monthly Installment Amount Is :"+ NumberFormat.getCurrencyInstance().format(calculate(loanAmount,interestRate,repaymentPeriod)));
 
-        //Initializing Final Variables
-        double monthlyPayment = 0;
+        balance(repaymentPeriod,loanAmount,interestRate);
 
+    }
+
+    public static void balance(int repaymentPeriod,int loanAmount , double interestRate){
+
+    int n = repaymentPeriod * 12;
+    double installment = 0;
+    System.out.println("-----REPAYMENT SCHEME-----\n");
+        for(int i=0; i<=n ; i++)
+    {
+        double c = interestRate/100/12;
+        installment = loanAmount * ( (Math.pow(1 + c, n) - Math.pow(1 + c, i)) / (Math.pow(1 + c, n) - 1));
+        System.out.println("Installment "+i+": "+ NumberFormat.getCurrencyInstance().format((installment)));
+
+    }
+    }
+
+
+
+    public static double calculate(int loanAmount,
+                                   double interestRate,
+                                   int repaymentPeriod){
         //Calculations
         interestRate = interestRate/100/12;
         repaymentPeriod = repaymentPeriod*12;
 
+        //Initializing Final Variables
+        double monthlyPayment = 0;
+
+        //Calculation
         monthlyPayment=loanAmount *(interestRate * Math.pow(1 + interestRate, repaymentPeriod)) /
                 (Math.pow(1 + interestRate, repaymentPeriod) - 1);
 
-        //FINAL
 
-        String monthlyPaymentFormatted = NumberFormat.getCurrencyInstance().format(monthlyPayment);
-
-
-        System.out.println("Your Monthly Payment Is :"+ monthlyPaymentFormatted);
+        return monthlyPayment;
     }
 }
